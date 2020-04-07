@@ -11,8 +11,14 @@ let todoRoutes = require("./routes/todos");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Serving up static public and views directories with Express
+app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/views"));
+
+
+
 app.get("/", function (req, res) {
-  res.send("HELLO FROM THE ROOT ROUTE ");
+  res.sendFile("index.html")
 });
 
 // Accessing/using all the routes with a prefix to all routes defined after the second param
