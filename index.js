@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 
 let todoRoutes = require("./routes/todos");
 
-// These 2 bodyParsers allow access to the request  body of a put/post request
+// These 2 bodyParsers allow access to the request body of a put/post request
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -15,6 +15,7 @@ app.get("/", function (req, res) {
   res.send("HELLO FROM THE ROOT ROUTE ");
 });
 
+// Accessing/using all the routes with a prefix to all routes defined after the second param
 app.use("/api/todos", todoRoutes);
 
 app.listen(port, () => console.log(`APP IS RUNNNING ON PORT: ${port}`));

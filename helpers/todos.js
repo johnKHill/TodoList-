@@ -31,8 +31,9 @@ exports.createTodos = function (req, res) {
 exports.getTodo = function (req, res) {
   // Mongoose will connect to the db with .findById() and will List
   // the foundTodo by that Id from the db with a Promise
-  db.Todo.findById(req.params.todoId).then(function (foundTodo) {
-    res.send(err);
+  db.Todo.findById(req.params.todoId)
+    .then(function (foundTodo) {
+      res.send(err);
   });
 };
 
@@ -40,7 +41,7 @@ exports.getTodo = function (req, res) {
 exports.updateTodo = function (req, res) {
   // Mongoose will connect to the db with .findOneAndUpdate() and will List
   // the todo by that _id from the db with a Promise
-  // new:true responds with the updated version not just only in the DB
+  // new: true responds with the updated version... not just only in the MongoDB
   db.Todo.findOneAndUpdate({ _id: req.params.todoId }, req.body, { new: true })
     .then(function (todo) {
       res.json(todo);
