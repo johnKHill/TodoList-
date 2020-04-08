@@ -10,10 +10,18 @@ $(document).ready(function() {
     }
   });
 
-  $(".list").on("click", "span", function() {
+  $(".list").on("click", "li", function() {
+    updateTodo($(this));
+  })
+
+  $(".list").on("click", "span", function(e) {
+    e.stopPropagation();
     removeTodo($(this).parent());
   });
 });
+
+
+
 
 function addTodos(todos) {
   // add todos to the page
@@ -26,6 +34,7 @@ function addTodo(todo) {
   // Mongo is storing the _id for the todos. I'm storing it using Jquery
   // mete-data '.data()' to store the _id also
   newTodo.data('id', todo._id);
+  newTodo.data("completed", todo.completed);
   if (todo.completed) {
     newTodo.addClass("done");
   }
@@ -49,6 +58,9 @@ function createTodo() {
 
 }
 
+
+
+
 function removeTodo(todo) {
   let clickedId = todo.data("id");
   let deleteUrl = "/api/todos/" + clickedId;
@@ -61,5 +73,23 @@ function removeTodo(todo) {
   })
   .catch(function(err) {
     console.log(err);
+  });
+}
+
+
+
+
+function updateTodo(todo) {
+  let updateUrl = "/api/todos/" + todo.data("id");
+  let isDone = !todo.data("completed");
+  let updateData = {completed: isDone};
+  $.ajax({
+    method: "PUT",
+    url: updateUrl,
+    data: updateData
+  })
+  .then(function(updatedTodo) {
+    todo.toggleClass("done");
+    todo.data("completed", isDone);
   });
 }
